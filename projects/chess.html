@@ -17,13 +17,49 @@
         crossorigin="anonymous"></script>
 
     <body>
-        t
-        <div id="myBoard" style="width: 400px"></div>
+        <div class="main-container">
+
+            <h1 class="title-h1">&lt;/spradier&gt;</h1>
+
+            <div id="myBoard" class="chessboard" style="width: 400px"></div>
+        
+
+        </div>
 
     </body>
 
+    <style>
+        @media only screen and (max-width: 600px) {
+        body {
+            background-color: lightblue;
+        }
+        }
+
+        .main-container {
+            margin: 7% auto auto auto;
+            width: 70vw;
+            height: 60vh;
+        }
+
+        .title-h1 {
+            font-size: 42px;
+            font-family: 'Montserrat';
+        }
+
+        .chessboard {
+            margin-top: 3%;
+        }
+
+    </style>
+
     <script>
         var board = Chessboard('myBoard', 'start')
+        //var elements = document.getElementsByClassName('hidden-class');
+        //for (var i in elements) {
+        //if (elements.hasOwnProperty(i)) {
+        //    elements[i].className = 'show-class';
+        //  }
+        //}
 
     </script>
 </html>
