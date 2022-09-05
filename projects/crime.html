@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    </head>
+
+    <body>
+
+        <div class="main-container">
+
+            <h1 class="title-h1">&lt;/spradier/projects&gt;predict_crimes.py</h1>
+
+            Hello world! <br>
+    This is the current date and time, as computed by Python:
+    <py-script>
+from datetime import datetime
+now = datetime.now()
+now.strftime("%m/%d/%Y, %H:%M:%S")
+    </py-script>
+            
+
+        </div>
+
+    </body>
+</html>
+
+<style>
+    @media only screen and (max-width: 600px) {
+    body {
+        background-color: lightblue;
+    }
+    }
+
+    .main-container {
+        margin: 7% auto auto auto;
+        width: 70vw;
+        height: 60vh;
+        display: flex;
+    }
+
+    .title-h1 {
+        font-size: 42px;
+		font-family: 'Montserrat';
+    }
+
+    
+</style>
