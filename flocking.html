@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    </head>
+
+    <body>
+
+        <div class="header">
+            <div class="icon">
+                <a href=""><div class="icon--rounded"><img src="img/bitmoji.png"></div></a>
+            </div>
+            <div class="icon">
+                <a href=""><svg class="svg--back" xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m24 31.3 2.1-2.1-3.7-3.7h9.1v-3h-9.1l3.7-3.7-2.1-2.1-7.3 7.3ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 24q0-4.15 1.575-7.8 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24 4q4.15 0 7.8 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Z"/></svg></a>
+            </div>
+        </div>
+
+        <div class="main-container">
+
+            <div class="title">
+                Semantic segmentation for scene understanding
+            </div>
+
+            <div class="description--texts">
+                <div class="description--title">Challenge</div>
+
+                <div class="text">
+                    This project was my end-of-study project done for a company called MBDA. The goal is to build the drone 
+                    perception  <br>for flocking application. Flocking is a principle describing birds behaviour. Basically, the goal 
+                    is to use both camera <br>perception and flocking behaviour to build a fleet of drone on a simulator that is 
+                    able to move from A to B in coordination. <br> For this project, I deciced to split the project in 3 parts : 
+                    the perception, the flocking and the implementation on the <br> simulator.
+                    
+                </div>
+
+                <div class="big--title">Part 1.</div>
+
+                <div class="description--title">Dataset</div>
+
+                <div class="text">
+                    For the perception model, I am using the cityscapes dataset which contains, in the version I am using 5000
+                    images from different cities (mainly in Germany), a segmentation file which contains the labelled image 
+                    segmented and the JSON files with the image information (annotations, etc...).
+                    
+                </div>
+
+                <div class="ds--sample--container">
+                    <img src="files/aachen_000000_000019_leftImg8bit.png"/>
+                    <img src="files/aachen_000000_000019_gtFine_color.png"/>
+                </div>
+
+                <div class="description--title">Model</div>
+
+                <div class="text">
+                    Here we want to perform semantic segmentation in order to understand the whole environment and not only 
+                    some object.<br> The principle of semantic segmentation is to perform a classification for each pixel of the 
+                    input image. In other words, we <br>have a defined number of classes and each of them are associated to a value 
+                    or a color and the model has to convert a<br> classic RGB image as shown above to a mapped image called mask.
+                    We use the encoder-decoder architecture called UNet. Below you can see the architecture of the model.
+                    
+                </div>
+
+                <div class="model--container">
+                    <img src="files/unet.png"/>
+                </div>
+
+                <div class="description--title">Results</div>
+
+                <div class="text">
+                    Of course, the result is not perfect or ideal. There are many reasons behind that, the first is that I am 
+                    training this model on a really small dataset for image generation. Another reason is that I am not training 
+                    it enough but for a longer training, it requires more GPUs or more time. I considered that this was enough
+                    for now and later on it will be interesting to re train it.
+                    
+                </div>
+                
+            </div>
+
+            <div class="icons--box">
+                <a href=""><svg class="contacts" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href=""><svg class="contacts" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Medium</title><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg></a>
+            </div>
+
+        </div>
+
+    </body>
+</html>
+
+<style>
+
+@font-face {
+        font-family: 'roboto-bold';
+        src: URL('fonts/Roboto-Bold.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'roboto-light';
+        src: URL('fonts/Roboto-Light.ttf') format('truetype');
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    @media only screen and (max-width: 600px) {
+    body {
+        background-color: black;
+    }
+    }
+
+    body {
+        background-color: black;
+    }
+
+    .header {
+        height: 80px;
+        background-color: black;
+        top: 0px;
+    }
+
+    .icon {
+        height: 80px;
+        width: 80px;
+    }
+
+    .icon--rounded{
+        height: 60px;
+        width: 60px;
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        border-radius: 60px;
+    }
+
+    .icon--rounded :hover{
+        background-color: #00C853
+;
+        border-radius: 60px;
+    }
+
+    .icon--rounded img{
+        height: 60px;
+        width: 60px;
+    }
+
+    .icon svg {
+        position: fixed;
+        right: 20px;
+        top: 20px;
+    }
+
+    .svg--back path:hover {
+        fill: #00C853;
+    }
+
+    .main-container {
+        margin: 7% auto auto auto;
+        width: 70vw;
+        height: 60vh;
+    }
+
+    .title {
+        font-family: roboto-bold;
+        font-size: 60px;
+        color: white;
+    }
+
+    .description--texts {
+        color: white;
+        margin-top: 40px;
+        margin-left: 12px;
+    }
+
+    .description--title {
+        font-family: roboto-bold;
+        font-size: 24px;
+    }
+
+    .text {
+        margin-top: 10px;
+        font-family: roboto-light;
+        font-size: 18px;
+        margin-bottom: 40px;
+    }
+
+    .big--title {
+        font-family: roboto-bold;
+        font-size: 32px;
+        margin-bottom: 40px;
+        margin-top: 60px;
+        border-bottom: 2px solid white;
+    }
+
+    .dataset--container {
+        margin-left: 50px;
+        margin-bottom: 40px;
+    }
+
+    .dataset--container img{
+        height: 70px;
+        width: 70px;
+    }
+
+    .icons--box {
+        height: 30px;
+        margin-top: 30px;
+        margin-left: 12px;
+    }
+
+    .contacts {
+        height: 25px;
+        width: 25px;
+        margin-right: 10px;
+    }
+
+    svg path{
+        fill:white
+    }
+
+    .bottom--div {
+        margin-top: 30px;
+        margin-left: 12px;
+        display: flex;
+        color: white;
+        font-family: roboto-light;
+    }
+
+    .bottom--text {
+        margin-top: 13px;
+        margin-right: 20px;
+    }
+
+    .model--container {
+        margin-left: 50px;
+        margin-bottom: 40px;
+    }
+
+    .model--container img {
+        height: 500px;
+    }
+
+    .ds--sample--container {
+        margin-left: 50px;
+        margin-bottom: 40px;
+    }
+    
+    .ds--sample--container img{
+        width: 300px;
+    }
+</style>
