@@ -10,12 +10,16 @@
 
         <div class="main-container">
 
+            <py-env>
+                - python-chess-master
+            </py-env>
+
             <h1 class="title-h1">&lt;/spradier/projects&gt;predict_crimes.py</h1>
 
             <py-script>
-                from datetime import datetime
-                now = datetime.now()
-                now.strftime("%m/%d/%Y, %H:%M:%S")
+                from python-chess-master import chess
+                board = chess.Board()
+                print(board.legal_moves)
             </py-script>
             
 
