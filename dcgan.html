@@ -66,17 +66,27 @@
                     training, <br> I used a Binary Cross Enthropy Loss function for both generator and discriminator with Adam optimizer.
                     I trained this <br>model over 500 epochs during about 12 hours with 1 GPU.
                     <br><br>
-                    test
                     <py-script>
                         import pandas as pd
-                        import matplotlib.pyplot as mp
+                        import matplotlib.pyplot as plt
+                        from pyodide.http import open_url
 
-                        df = pd.read_csv(open_url('https://github.com/spradier/spradier.github.io/blob/master/files/losses.csv'))
+                        df = pd.read_csv(open_url('https://raw.githubusercontent.com/spradier/spradier.github.io/master/files/losses.csv'))
                         #print(df)
+                        
+                        fig, ax = plt.subplots(nrows=1, ncols=1)
+                        df.plot.line(y=["g_losses", "d_losses"], ax=ax, color=['#FFAB00', 'green'])
+                        
+                        ax = plt.gca()
+
+                        ax.patch.set_facecolor('black')
+
+                        fig.patch.set_facecolor('black')
+
+                        ax.tick_params(axis='x', colors='white')
+                        ax.tick_params(axis='y', colors='white')
                                                 
-                        df.plot.line(y=["g_losses", "d_losses"])
-                                                
-                        mp.show()
+                        fig 
 
                     </py-script>
                 
