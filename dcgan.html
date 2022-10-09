@@ -10,8 +10,6 @@
         <py-env>
             - pandas 
             - matplotlib
-            - paths:
-            - /files/losses.csv
         </py-env>
     </head>
 
@@ -73,12 +71,12 @@
                         import pandas as pd
                         import matplotlib.pyplot as mp
 
-                        #df = pd.read_csv("./files/losses.csv")
+                        df = pd.read_csv(open_url('https://github.com/spradier/spradier.github.io/blob/master/files/losses.csv'))
                         #print(df)
                                                 
-                        #df.plot.line(y=["g_losses", "d_losses"])
+                        df.plot.line(y=["g_losses", "d_losses"])
                                                 
-                        #mp.show()
+                        mp.show()
 
                     </py-script>
                 
