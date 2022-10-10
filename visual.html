@@ -41,10 +41,6 @@
 
                 <div class="draw--div" >
                     <canvas id="draw"></canvas>
-                    <div class="button--div">
-                        <div id="guard"></div>
-                        <div id="map"></div>
-                    </div>
                 </div>
 
                 <py-config type="json">
@@ -140,7 +136,7 @@
                         list_points = []
 
                         ctx.beginPath()
-                        ctx.fillStyle = 'green'
+                        ctx.fillStyle = '#FFAB00'
                         ctx.moveTo(pointsSeen[0].x, pointsSeen[0].y)
                         for i in range(0, len(pointsSeen)-1):
                             print(pointsSeen[i].x, pointsSeen[i].y)
@@ -178,7 +174,7 @@
 
                         if size == 1:
                             ctx.beginPath()
-                            ctx.arc(x, y, 2, 0, 2 * math.pi)
+                            ctx.arc(x, y, 0.5, 0, 2 * math.pi)
                             ctx.fillStyle = 'white'
                             ctx.fill()
                 
@@ -203,7 +199,7 @@
                                 ctx.moveTo(corners[size-2].x, corners[size-2].y)
                                 ctx.lineTo(corners[0].x, corners[0].y)
                                 ctx.lineWidth = 2
-                                ctx.strokeStyle = 'red'
+                                ctx.strokeStyle = '#D32F2F'
                                 ctx.stroke()
 
                                 print('done')
@@ -215,7 +211,7 @@
 
                             if size == 2 or size == 3:
                                 ctx.beginPath()
-                                ctx.arc(x, y, 2, 0, 2 * math.pi)
+                                ctx.arc(x, y, 0.5, 0, 2 * math.pi)
                                 ctx.fillStyle = 'white'
                                 ctx.fill()
 
@@ -223,7 +219,7 @@
                                 ctx.moveTo(corners[size-2].x, corners[size-2].y)
                                 ctx.lineTo(corners[size-1].x, corners[size-1].y)
                                 ctx.lineWidth = 2
-                                ctx.strokeStyle = 'red'
+                                ctx.strokeStyle = '#D32F2F'
                                 ctx.stroke()
 
                                 #point.draw = cnv.create_oval(event.x-3, event.y-3, event.x+3, event.y+3, fill='#00E676')
@@ -241,7 +237,7 @@
                                     ####text.set("You can't place this corners here !")
                                 else:
                                     ctx.beginPath()
-                                    ctx.arc(x, y, 2, 0, 2 * math.pi)
+                                    ctx.arc(x, y, 0.5, 0, 2 * math.pi)
                                     ctx.fillStyle = 'white'
                                     ctx.fill()
 
@@ -249,7 +245,7 @@
                                     ctx.moveTo(corners[size-2].x, corners[size-2].y)
                                     ctx.lineTo(corners[size-1].x, corners[size-1].y)
                                     ctx.lineWidth = 2
-                                    ctx.strokeStyle = 'red'
+                                    ctx.strokeStyle = '#D32F2F'
                                     ctx.stroke()
                                     #point.draw = cnv.create_oval(point.x-3, point.y-3, point.x+3, point.y+3, fill='#00E676')
                                     #cnv.create_line(corners[size-2].x, corners[size-2].y, corners[size-1].x, corners[size-1].y, fill='#00E676', tag='borde
@@ -277,7 +273,7 @@
                                 
                                 ctx.beginPath()
                                 ctx.arc(x, y, 2, 0, 2 * math.pi)
-                                ctx.fillStyle = 'green'
+                                ctx.fillStyle = 'black'
                                 ctx.fill()
 
                                 #cnv.tag_raise('guard')
@@ -416,7 +412,6 @@
     .draw--div {
         width: 700px;
         height: 400px;
-        background-color: red;
         display: flex;
     }
 
@@ -442,7 +437,8 @@
     canvas {
         width: 600px;
         height: 400px;
-        background-color: blue;
+        background-color: #212121;
+        border-radius: 5px ;
     }
 
 
