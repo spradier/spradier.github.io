@@ -75,6 +75,87 @@
                     import js
 
                     corners = []
+                    room = False
+                    placed = False
+
+                    def visualisation(guard, corners, ctx):
+
+                        global pointsSeen
+                        global pointsNotSeen
+                        
+                        pointsSeen = []
+                        pointsNotSeen = []
+                        
+                        corners[-1] = corners[0]
+                        
+                        for seg in range(len(corners) - 1):
+                            for point in range(len(corners)):
+                                i = barycenter(corners[seg], corners[seg+1], corners[point], guard)
+                                
+                                if i == 0:
+                                    pass
+                                
+                                elif i.notVisible(corners[seg], corners[seg+1], corners[point], guard) == True and imprecision(i, corners[point]) == False:
+                                    pointsNotSeen.append(corners[point])
+                                    
+                        pointsNotSeen = [p for p in corners if p in pointsNotSeen]
+                        pointsSeen = [p for p in corners if p not in pointsNotSeen]
+                        
+                        vision = []
+                        for n in range(len(pointsSeen)):
+                            vision.append((pointsSeen[n].x, pointsSeen[n].y))
+
+                        for point in range(len(pointsSeen)):
+                            alignedPoints = []
+                            for seg in range(len(corners)-1):
+                                
+                                i = barycenter(corners[seg], corners[seg+1], pointsSeen[point], guard)
+                                if i.ableToSeeFurther(corners[seg], corners[seg+1], pointsSeen[point], guard) == True and imprecision(i, pointsSeen[point]) == False:
+                                    for n, pt in enumerate(corners):
+                                        if pointsSeen[point] == pt:
+                                            if orientation(guard, corners[n-1], pointsSeen[point], corners[n+1]) == True:
+                                                alignedPoints.append(i)
+                                                    
+                            alignedPoints.sort(key=lambda P:dist(P, guard))
+
+                            if len(alignedPoints) != 0:
+                                for p in range(len(corners)-1):
+                                    if pointsSeen[point] == corners[p]:
+                                        for p2 in range(len(corners)-1):
+                                            
+                                            if alignedPoints[0].onSeg(corners[p2], corners[p2 + 1]) == True and p < p2:
+                                                pointsSeen.insert(point+1, alignedPoints[0])
+                                                point += 1
+                                                
+                                            elif alignedPoints[0].onSeg(corners[p2], corners[p2 + 1]) == True and p > p2:
+                                                pointsSeen.insert(point, alignedPoints[0])
+                                                point += 1
+                                                
+                        draw(pointsSeen, guard, ctx)
+
+
+                    def draw(pointsSeen, guard, ctx):
+                        global vision
+                        global placed
+                        list_points = []
+
+                        ctx.beginPath()
+                        ctx.fillStyle = 'green'
+                        ctx.moveTo(pointsSeen[0].x, pointsSeen[0].y)
+                        for i in range(0, len(pointsSeen)-1):
+                            print(pointsSeen[i].x, pointsSeen[i].y)
+
+                            ctx.lineTo(pointsSeen[i+1].x, pointsSeen[i+1].y)
+                        ctx.closePath()
+                        ctx.fill()
+                        print(pointsSeen)
+
+                        placed = True
+                    
+                        #vision = cnv.create_polygon(list_points, fill='#FFEA00', tag='vision')
+                        #cnv.tag_raise('guard')
+                        #cnv.create_oval(guard.x - 10, guard.y - 10, guard.x + 10, guard.y  + 10, fill='#FF3D00')
+                    
                 
                  
                     def build_map(event):
@@ -84,7 +165,7 @@
                         rect = canvas.getBoundingClientRect()
 
                         global corners
-                        #global room
+                        global room
                         x, y = event.clientX - rect.left, event.clientY - rect.top
                         x, y = x * canvas.width / rect.width, y * canvas.height / rect.height
             
@@ -104,7 +185,7 @@
                             #point.draw = cnv.create_oval(event.x-3, event.y-3, event.x+3, event.y+3, fill='#00E676')
                         
                         # if we have 2 points or more, we want to enable user to finish the room by clicking on an existing point
-                        if size >= 2: 
+                        if size >= 2 and room == False: 
         
                             if imprecision(corners[size-1], corners[0]) == True:
                                 #ctx.beginPath()
@@ -126,6 +207,7 @@
                                 ctx.stroke()
 
                                 print('done')
+                                room = True
 
                                 #del corners_list[-1]
                                 #room = cnv.create_polygon(corners_list, fill='#00E676', tag='poly')
@@ -173,30 +255,36 @@
                                     #cnv.create_line(corners[size-2].x, corners[size-2].y, corners[size-1].x, corners[size-1].y, fill='#00E676', tag='borde
                     
                     
-                    def validate_guard(event):
-                        global iconGuard
-                        global guard
-                        global placed
-                        global corners
+                        elif room == True:
+                            print("the guard now")
+                            global placed
+                            guard = Point(x, y, None)
+                            ray = Point(event.x + 50, event.y, None)
+                            nb_inter = 0
 
-                        x, y = event.clientX - rect.left, event.clientY - rect.top
-                        x, y = x * canvas.width / rect.width, y * canvas.height / rect.height
-                        guard = Point(x, y, None)
-                        placed = False
-                                    
-                        # we add the size of the window ==> that makes a ray starting from the click we made going to the same high point W pixels further
-                        ray = Point(event.x + 600, event.y, None)
-                        print(event.x + 600)
-                                    
-                        # and we count how many intersections we have / peer ==> outside : because I enter and I leave the room
-                        nb_inter = 0
-                                    
-                        for p in range(len(corners)-1):
-                            i = barycenter(guard, ray, corners[p], corners[p+1])
+
+                            for p in range(len(corners)-1):
+                                i = barycenter(guard, ray, corners[p], corners[p+1])
+
+                                if i != 0:
+                                    if i.onSeg(corners[p], corners[p+1]) == True and i.onSeg(guard, ray) == True and i != 0:
+                                        nb_inter += 1
+
+                            print(nb_inter)
+                            if placed == False and nb_inter % 2 == 0:
+                                placed = True
+                                print("okok")
                                 
-                            if i != 0:
-                                if i.onSeg(corners[p], corners[p+1]) == True and i.onSeg(guard, ray) == True and i != 0:
-                                    nb_inter += 1
+                                ctx.beginPath()
+                                ctx.arc(x, y, 2, 0, 2 * math.pi)
+                                ctx.fillStyle = 'green'
+                                ctx.fill()
+
+                                #cnv.tag_raise('guard')
+                                #text.set('You can place another guard if you want')
+                                
+                                visualisation(guard, corners, ctx)
+                   
                                         
 
 
@@ -338,6 +426,13 @@
     }
 
     .button--div div {
+        width: 60px;
+        height: 80px;
+        background-color: yellow;
+        margin-bottom: 30px;
+    }
+
+    .button--div div:hover {
         width: 60px;
         height: 80px;
         background-color: yellow;
