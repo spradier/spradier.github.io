@@ -146,13 +146,10 @@
                         ctx.fill()
                         print(pointsSeen)
 
+                        document.getElementById("instructions").textContent = "Now you see !"
+
                         placed = True
                     
-                        #vision = cnv.create_polygon(list_points, fill='#FFEA00', tag='vision')
-                        #cnv.tag_raise('guard')
-                        #cnv.create_oval(guard.x - 10, guard.y - 10, guard.x + 10, guard.y  + 10, fill='#FF3D00')
-                    
-                
                  
                     def build_map(event):
                  
@@ -170,7 +167,7 @@
                         
                         size = len(corners)
                         print(corners)
-                        ####text.set('Place every corners of the room by right clicking.')
+                        document.getElementById("instructions").textContent = "Place every corners of the room by clicking on the canvas."
 
                         if size == 1:
                             ctx.beginPath()
@@ -178,18 +175,11 @@
                             ctx.fillStyle = 'white'
                             ctx.fill()
                 
-                            #point.draw = cnv.create_oval(event.x-3, event.y-3, event.x+3, event.y+3, fill='#00E676')
                         
                         # if we have 2 points or more, we want to enable user to finish the room by clicking on an existing point
                         if size >= 2 and room == False: 
         
                             if imprecision(corners[size-1], corners[0]) == True:
-                                #ctx.beginPath()
-                                #print(corners[size-2].x, corners[size-2].y)
-                                #ctx.moveTo(corners[size-2].x, corners[size-2].y)
-                                #ctx.lineTo(corners[0].x, corners[0].y)
-                                #ctx.stroke()
-                                ####cnv.create_line(corners[size-2].x, corners[size-2].y, corners[0].x, corners[0].y, fill='#00E676', tag='border')
                                 
                                 corners_list = []
                                 for idx in range(len(corners)-1):
@@ -202,14 +192,14 @@
                                 ctx.strokeStyle = '#D32F2F'
                                 ctx.stroke()
 
-                                print('done')
+                                document.getElementById("instructions").textContent = "You can now place the guard :)"
                                 room = True
 
                                 #del corners_list[-1]
                                 #room = cnv.create_polygon(corners_list, fill='#00E676', tag='poly')
                                 pass
 
-                            if size == 2 or size == 3:
+                            elif size == 2 or size == 3:
                                 ctx.beginPath()
                                 ctx.arc(x, y, 0.5, 0, 2 * math.pi)
                                 ctx.fillStyle = 'white'
@@ -222,9 +212,6 @@
                                 ctx.strokeStyle = '#D32F2F'
                                 ctx.stroke()
 
-                                #point.draw = cnv.create_oval(event.x-3, event.y-3, event.x+3, event.y+3, fill='#00E676')
-                                #cnv.create_line(corners[size-2].x, corners[size-2].y, corners[size-1].x, corners[size-1].y, fill='#00E676', tag='border')
-
                             elif size > 3:
                                 c = 0
                                 for n in range(size-2):
@@ -234,7 +221,7 @@
                 
                                 if c != 0:
                                     del corners[-1]
-                                    ####text.set("You can't place this corners here !")
+                                    document.getElementById("instructions").textContent = "You can't place the point here ! The walls can't cross..."
                                 else:
                                     ctx.beginPath()
                                     ctx.arc(x, y, 0.5, 0, 2 * math.pi)
@@ -247,8 +234,6 @@
                                     ctx.lineWidth = 2
                                     ctx.strokeStyle = '#D32F2F'
                                     ctx.stroke()
-                                    #point.draw = cnv.create_oval(point.x-3, point.y-3, point.x+3, point.y+3, fill='#00E676')
-                                    #cnv.create_line(corners[size-2].x, corners[size-2].y, corners[size-1].x, corners[size-1].y, fill='#00E676', tag='borde
                     
                     
                         elif room == True:
@@ -275,11 +260,11 @@
                                 ctx.arc(x, y, 2, 0, 2 * math.pi)
                                 ctx.fillStyle = 'black'
                                 ctx.fill()
-
-                                #cnv.tag_raise('guard')
-                                #text.set('You can place another guard if you want')
                                 
                                 visualisation(guard, corners, ctx)
+
+                            else:
+                                document.getElementById("instructions").textContent = "The guard has to be inside the room, else he won't see anything..."
                    
                                         
 
@@ -293,6 +278,15 @@
                 
                 
                 </py-script>
+
+                <div class="instructions--container">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="m24 46-6-6H9q-1.2 0-2.1-.925Q6 38.15 6 37V7q0-1.2.9-2.1Q7.8 4 9 4h30q1.15 0 2.075.9Q42 5.8 42 7v30q0 1.15-.925 2.075Q40.15 40 39 40h-9Zm1.05-20.3q0-1.55.5-2.525.5-.975 1.75-2.225 1.65-1.65 2.3-2.925.65-1.275.65-2.675 0-2.65-1.7-4.2-1.7-1.55-4.6-1.55-2.55 0-4.375 1.225Q17.75 12.05 16.9 14.2l2.65 1.1q.7-1.4 1.8-2.125 1.1-.725 2.6-.725 1.6 0 2.525.8.925.8.925 2.2 0 1-.55 1.925T25 19.55q-1.85 1.75-2.325 3-.475 1.25-.475 3.15Zm-1.2 7.4q.8 0 1.35-.55t.55-1.35q0-.8-.55-1.35t-1.35-.55q-.8 0-1.35.55t-.55 1.35q0 .8.55 1.35t1.35.55Z"/></svg>
+                    <div class="instructions--box">
+                        <p id="instructions">
+                            Start building the room by placing the points on the canvas !
+                        </p>
+                    </div>
+                </div>
                 
             </div>
 
@@ -359,8 +353,7 @@
     }
 
     .icon--rounded :hover{
-        background-color: #D32F2F
-;
+        background-color: #D32F2F;
         border-radius: 60px;
     }
 
@@ -441,6 +434,37 @@
         border-radius: 5px ;
     }
 
+    .instructions--container {
+        width: 600px;
+        height: 30px;
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .instructions--container svg {
+        height: 50px;
+        width: 50px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .instructions--container svg path{
+        fill: #D32F2F;
+    }
+
+    .instructions--box {
+        width: 550px;
+        height: 40px;
+        margin-top: 3px;
+        background-color: #D32F2F;
+        border-radius: 5px ;
+        color: black;
+    }
+
+    #instructions {
+        margin-left: 10px;
+        margin-top: 7px;
+    }
 
     .icons--box {
         height: 30px;
