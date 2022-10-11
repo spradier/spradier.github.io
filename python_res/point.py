@@ -94,3 +94,75 @@ class Point():
             return True
         else:
             return False
+
+
+
+def visualisation(guard, corners):
+
+    global pointsSeen
+    global pointsNotSeen
+    
+    pointsSeen = []
+    pointsNotSeen = []
+    
+    corners[-1] = corners[0]
+    
+    for seg in range(len(corners) - 1):
+        for point in range(len(corners)):
+            i = barycenter(corners[seg], corners[seg+1], corners[point], guard)
+            
+            if i == 0:
+                pass
+            
+            elif i.notVisible(corners[seg], corners[seg+1], corners[point], guard) == True and imprecision(i, corners[point]) == False:
+                pointsNotSeen.append(corners[point])
+                
+    pointsNotSeen = [p for p in corners if p in pointsNotSeen]
+    pointsSeen = [p for p in corners if p not in pointsNotSeen]
+    
+    vision = []
+    for n in range(len(pointsSeen)):
+        vision.append((pointsSeen[n].x, pointsSeen[n].y))
+
+    for point in range(len(pointsSeen)):
+        alignedPoints = []
+        for seg in range(len(corners)-1):
+            
+            i = barycenter(corners[seg], corners[seg+1], pointsSeen[point], guard)
+            if i.ableToSeeFurther(corners[seg], corners[seg+1], pointsSeen[point], guard) == True and imprecision(i, pointsSeen[point]) == False:
+                for n, pt in enumerate(corners):
+                    if pointsSeen[point] == pt:
+                        if orientation(guard, corners[n-1], pointsSeen[point], corners[n+1]) == True:
+                            alignedPoints.append(i)
+                                
+        alignedPoints.sort(key=lambda P:dist(P, guard))
+
+        if len(alignedPoints) != 0:
+            for p in range(len(corners)-1):
+                if pointsSeen[point] == corners[p]:
+                    for p2 in range(len(corners)-1):
+                        
+                        if alignedPoints[0].onSeg(corners[p2], corners[p2 + 1]) == True and p < p2:
+                            pointsSeen.insert(point+1, alignedPoints[0])
+                            point += 1
+                            
+                        elif alignedPoints[0].onSeg(corners[p2], corners[p2 + 1]) == True and p > p2:
+                            pointsSeen.insert(point, alignedPoints[0])
+                            point += 1
+                            
+    draw(pointsSeen, guard)
+
+
+def draw(pointsSeen, guard):
+    global vision
+    list_points = []
+    for point in pointsSeen:
+        list_points.append((point.x, point.y))
+        
+
+    vision = cnv.create_polygon(list_points, fill='#FFEA00', tag='vision')
+    cnv.tag_raise('guard')
+    cnv.create_oval(guard.x - 10, guard.y - 10, guard.x + 10, guard.y  + 10, fill='#FF3D00')
+
+
+    return
