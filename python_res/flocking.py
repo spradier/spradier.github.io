@@ -1,7 +1,8 @@
 from random import randint
+from turtle import color
 
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation, PillowWriter
 from mpl_toolkits import mplot3d
 
 import numpy as np
@@ -32,6 +33,8 @@ k3 = 3
 
 # Create figure and axe
 fig = plt.figure()
+fig.patch.set_alpha(0.0)
+fig.tight_layout()
 ax = plt.axes(projection='3d')
 
 # Function to update the animation
@@ -68,11 +71,24 @@ def animate(i):
         points[n] = new_coords
                 
     ax.clear()
-    ax.scatter(points[:, 0], points[:, 1], points[:, 2])
+    ax.scatter(points[:, 0], points[:, 1], points[:, 2], color='#00C853')
+    ax.tick_params(axis='x', colors='white')
+    ax.tick_params(axis='y', colors='white')
+    ax.tick_params(axis='z', colors='white')
     ax.set_xlim([-10,10])
     ax.set_ylim([-10,10])
     ax.set_zlim([-10,10])
 
 ani = FuncAnimation(fig, animate, frames=50, interval=100, repeat=True)
+#f = "test.gif"
+#writergif = PillowWriter(fps=30) 
+#ani.save(f, writer=writergif, codec='png', savefig_kwargs={"transparent": True, "facecolor": "none"})
 
-plt.show()
+ani.save(
+    "test2.gif",
+    codec="png",
+    dpi=100,
+    bitrate=-1,
+    savefig_kwargs={"transparent": True, "facecolor": "none"},
+)
+#plt.show()
